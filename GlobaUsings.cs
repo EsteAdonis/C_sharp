@@ -1,0 +1,12 @@
+global using  System.ComponentModel.Design;
+global using  System.Globalization;
+global using  System.Security.Authentication.ExtendedProtection;
+global using  System.Security.Cryptography;
+global using  System.Security.Cryptography.X509Certificates;
+global using  System.Text;
+global using  System.Threading.Tasks;
+global using  C_Sharp.Data;
+global using  C_Sharp.Models;
+global using  C_Sharp.OOP;
+global using Microsoft.CodeAnalysis;
+global using Microsoft.EntityFrameworkCore;
