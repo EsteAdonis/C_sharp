@@ -28,7 +28,7 @@ public static class StringHandling
 		CountVowelsAndConsonants("Adonis Siempre Avante");
 		CompressAString("aaadddooooonnniiiiisssss");
 		SecondMostFrequent("Adonis Siempre Avante");
-		RotaeString("Adonis Siempre Avante", 3);
+		RotateString("Adonis Siempre Avante", 3);
 	}
 	
 	public static void ImmutableString()
