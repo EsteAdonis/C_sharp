@@ -1,12 +1,11 @@
 ﻿
+using C_Sharp.Strings;
+
 namespace C_Sharp
 {
 	public sealed class Beast
 	{
-		public void Speak()
-		{
-			Console.WriteLine("The animal speaks.");
-		}
+		public void Speak() => Console.WriteLine("The animal speaks.");
 	}
 
 	// This will cause a compile-time error
@@ -33,10 +32,13 @@ namespace C_Sharp
 	{
 		static void Main(string[] args)
 		{
+
+			StringHandling.MainExcuting();
+
 			// Threading.StartCountDown();
-// 			Threading.ParallelForEachExample().GetAwaiter().GetResult();
-// 	Threading.SummonDogTasks().GetAwaiter().GetResult();	
-			//Console.WriteLine("Press any key to exit...");
+			// Threading.ParallelForEachExample().GetAwaiter().GetResult();
+			// Threading.SummonDogTasks().GetAwaiter().GetResult();	
+			// Console.WriteLine("Press any key to exit...");
 			// Console.ReadKey();
 
 
@@ -78,7 +80,7 @@ namespace C_Sharp
 			// Stopwatch_Example.Running_Stopwatch();      
 
 			// MultiThreading.MultiThreadingExamples();
-			Linq.LinqExamples();
+			// Linq.LinqExamples();
 			// await WorkingWithRepos.RunningRepo();
 		}
 	}
