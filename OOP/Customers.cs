@@ -6,7 +6,7 @@ using Microsoft.Identity.Client;
 
 namespace C_Sharp.OOP
 {
-	public class LocalOrder(int id, int customerId, DateOnly orderDate, double amount)
+	class LocalOrder(int id, int customerId, DateOnly orderDate, double amount)
   {
 		public int Id => id;
 		public int CustomerId => customerId;
@@ -14,14 +14,13 @@ namespace C_Sharp.OOP
 		public double Amount => amount;
   }
 
-
   public class Customers(int id, string name, DateOnly birthDate)
   {
     public int Id => id;
     public string Name  => name;
     public DateOnly BirthDate  => birthDate;
 
-		protected List<LocalOrder> Orders = [];
+		internal List<LocalOrder> Orders = [];
 
 		public void ListOrders() 
 		{

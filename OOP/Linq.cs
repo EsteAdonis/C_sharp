@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace C_Sharp
 {
-	public class Employee(int id, string name, string color, decimal salary, int? managerId, int? departmentId)
+	class Employee(int id, string name, string color, decimal salary, int? managerId, int? departmentId)
 	{
 		public int Id => id;
 		public string? Name => name;
@@ -17,23 +17,60 @@ namespace C_Sharp
 		public int? DepartmentId => departmentId;
 	}
 
-	public class Depatment(int id, string name)
+	class Depatment(int id, string name)
 	{
 		public int Id => id;
 		public string? Name => name;
 	}
 	
-	public class Movie(int id, string actress, string moviename)
+	class Movie(int id, string actress, string moviename)
 	{
 		public int Id => id;
 		public string? Protagonist => actress;
 		public string? MovieName => moviename;
 	}
 
-	public static class Linq
+	static class Linq
 	{
-		public static void LinqExamples()
+		public record Person(string Name, int Age);
+
+		static void LinqExamples()
 		{
+			// Interview Questions
+			var datos = "HOME GO HOME WRONG".Split(' '); 
+			// => [0] ="Home"
+			// => [1] ="GO"			
+			// => [2] ="Home"
+			// => [3] ="WRONG"
+			foreach(var element in datos)
+			{
+				if (element.StartsWith('G')) Console.WriteLine($"element = {element}");
+				if (element.EndsWith('W')) Console.WriteLine($"element = {element}");				
+			}
+
+			// real problem is here
+			var words = datos.Where( d => d.StartsWith('G') || d.EndsWith('W') );
+			foreach(var word in words)
+			{
+				Console.WriteLine($"Directional status: {word}...");
+			};
+			// Output: GO
+
+			// Interview Questions
+			// Get the third person based on the Age column after the rows has been ordered.
+			List<Person> persons =
+			[
+				new("Esteban", 45),
+				new("Adonis", 65),
+				new("Eris", 21),
+				new("Vanesa", 33),
+				new("Amy", 51),														
+			];
+
+			var ThirdPerson = persons.OrderBy(p => p.Age).Skip(2).Take(1).Select(p => new {Name = p.Name}).ToArray();
+			Console.WriteLine($"The third person in {ThirdPerson[0].Name}");
+
+
 			var Departments = new List<Depatment>()
 			{
 				new (1, "Human Resorces"),
@@ -180,7 +217,6 @@ namespace C_Sharp
 			// {
 			// 		Console.WriteLine($"City: {city}, Last Name: {last}");
 			// }
-
 
 
 			// Group By Clause

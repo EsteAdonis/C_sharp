@@ -1,13 +1,23 @@
-﻿
-using C_Sharp.Strings;
+﻿using C_Sharp.Strings;
+using C_Sharp.OOP;
+
 
 namespace C_Sharp
 {
-	public sealed class Beast
+
+	sealed class Beast 
 	{
+		public void DoWork()
+		{
+			throw new NotImplementedException();
+		}
+
 		public void Speak() => Console.WriteLine("The animal speaks.");
 	}
-
+// traps
+// shoots then back.
+// gain.
+// mistakes that loud singals for a giant bomber.
 	// This will cause a compile-time error
 	// public class Dog : Animal 
 	// {
@@ -17,7 +27,7 @@ namespace C_Sharp
 	//     }
 	// }	
 
-	public static class StringExtensions
+	static class StringExtensions
 	{
 		public static string ReversString(this string value)
 		{
@@ -27,13 +37,15 @@ namespace C_Sharp
 			return reverse.ToString();
 		}
 	}
-
+		
 	internal class Program
 	{
 		static void Main(string[] args)
 		{
+			AccessModifier.MainClass();
 
-			StringHandling.MainExcuting();
+			var reversString = "Eris Hermafrodita Atenea".ReversString();
+			Console.WriteLine(reversString);			
 
 			// Threading.StartCountDown();
 			// Threading.ParallelForEachExample().GetAwaiter().GetResult();
@@ -41,12 +53,8 @@ namespace C_Sharp
 			// Console.WriteLine("Press any key to exit...");
 			// Console.ReadKey();
 
-
 			// var myAnimal = new Beast();
 			// myAnimal.Speak();
-
-			// var reversString = "Eris Hermafrodita Atenea".ReversString();
-			// Console.WriteLine(reversString);
 
 			// object guy = "Timothy";
 			// char[] letters = {'T','i','m','o','t','h','y'};
