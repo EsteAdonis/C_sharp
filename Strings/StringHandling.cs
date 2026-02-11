@@ -257,4 +257,22 @@ public static class StringHandling
 		k %= s.Length;
 		Console.WriteLine($"\n{s[^k..]} + {s[..^k]} = {s[^k..] + s[..^k]}");
 	}
+
+	public static void FindRepeatedLetter(string letters)
+	{
+		Dictionary<char, int> letterCounts = [];
+
+		foreach(char letter in letters){
+			if (letterCounts.TryGetValue(letter, out int value))
+			{
+				letterCounts[letter]++;
+			}
+			else {
+				letterCounts[letter] = 1;
+			}
+		}
+
+		foreach(var pair in letterCounts)
+			if (pair.Value > 1) Console.WriteLine($"Lette: {pair.Key} = {pair.Value} times");
+	}
 }

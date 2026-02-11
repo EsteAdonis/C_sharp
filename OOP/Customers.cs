@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Identity.Client;
-
 namespace C_Sharp.OOP
 {
 	class LocalOrder(int id, int customerId, DateOnly orderDate, double amount)

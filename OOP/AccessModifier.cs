@@ -1,8 +1,4 @@
-
-using System.ComponentModel;
-
 namespace C_Sharp.OOP;
-
 
 // Top-level the default is internal 
 static class AccessModifier
@@ -11,7 +7,6 @@ static class AccessModifier
 	public static void MainClass()
 	{
 		Console.WriteLine("Balance = 60,000.00 MXN");
-
 
 		var b = new Balance();
 		Console.WriteLine($"GetBalance => {b.GetBalance()}");
@@ -34,5 +29,22 @@ class Balance : IWorker
 
 	// Default is private 
 	public double GetBalance() => 60000.0F;
+
 }
 
+abstract class ABS()
+{
+	public abstract void Calculation();
+	public abstract int MaxSpeed { get; }
+}
+
+class MyClass : ABS
+{
+	public override int MaxSpeed => 160;
+	public override void Calculation()
+	{
+
+		throw new NotImplementedException();
+	}
+	
+}

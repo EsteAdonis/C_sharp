@@ -1,11 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
-
-namespace C_Sharp
+namespace C_Sharp.OOP
 {
 	public interface ILogger
 	{

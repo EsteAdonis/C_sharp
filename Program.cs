@@ -1,5 +1,7 @@
 ﻿using C_Sharp.Strings;
 using C_Sharp.OOP;
+using System.Runtime.CompilerServices;
+using C_Sharp.Pattern.Design.Singleton;
 
 
 namespace C_Sharp
@@ -42,10 +44,10 @@ namespace C_Sharp
 	{
 		static void Main(string[] args)
 		{
-			AccessModifier.MainClass();
-
-			var reversString = "Eris Hermafrodita Atenea".ReversString();
-			Console.WriteLine(reversString);			
+			// AccessModifier.MainClass();
+			
+			// var reversString = "Eris Hermafrodita Atenea".ReversString();
+			// Console.WriteLine(reversString);			
 
 			// Threading.StartCountDown();
 			// Threading.ParallelForEachExample().GetAwaiter().GetResult();
@@ -90,6 +92,10 @@ namespace C_Sharp
 			// MultiThreading.MultiThreadingExamples();
 			// Linq.LinqExamples();
 			// await WorkingWithRepos.RunningRepo();
+
+
+			// Design Pattern
+			EntrySingleton.ExecSingleton();
 		}
 	}
 }
