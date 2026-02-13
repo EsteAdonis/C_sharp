@@ -4,12 +4,7 @@ public class Singleton()
 {
 	static Singleton? instance;
 
-	public static Singleton Instance()
-	{
-		// if instance is null then assign new Singleton()
-		instance ??= new Singleton();
-		return instance;
-	}
+	public static Singleton Instance() => instance ??= new Singleton();
 }
 
 

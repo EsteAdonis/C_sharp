@@ -2,6 +2,7 @@
 using C_Sharp.OOP;
 using System.Runtime.CompilerServices;
 using C_Sharp.Pattern.Design.Singleton;
+using C_Sharp.HttpExamples;
 
 
 namespace C_Sharp
@@ -42,7 +43,7 @@ namespace C_Sharp
 		
 	internal class Program
 	{
-		static void Main(string[] args)
+		static async Task Main(string[] args)
 		{
 			// AccessModifier.MainClass();
 			
@@ -95,7 +96,10 @@ namespace C_Sharp
 
 
 			// Design Pattern
-			EntrySingleton.ExecSingleton();
+			// EntrySingleton.ExecSingleton();
+
+			// HttpClient
+			await HttpMainExamples.HttpExamples();
 		}
 	}
 }
