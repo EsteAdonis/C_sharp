@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace C_Sharp
+namespace C_Sharp.Linq
 {
 	class Employee(int id, string name, string color, decimal salary, int? managerId, int? departmentId)
 	{
@@ -32,10 +28,88 @@ namespace C_Sharp
 
 	static class Linq
 	{
-		public record Person(string Name, int Age);
-
-		static void LinqExamples()
+  	public record Person(string Name, int Age);
+		public record Employee2(string Name, List<string> Skills);
+		record PetOwner(string Name, List<string> Pets);
+		
+		public static void LinqExamples()
 		{
+
+			// LINQ SelectMany is used to project each element of a sequence into 
+			// a new form and then flatten the resulting sequences into a single sequence.
+			// It's particularly useful when working with nested collections.
+
+
+			// To flatten a list of lists into a single list:
+			var products = new List<List<string>>
+			{
+				new() {"Apple", "Banna", "Grapes"},
+				new() {"Coke", "Milk", "Fanta"},
+				new() {"Mobile", "TV", "Tablet"},
+			};
+
+			var allProducts = products.SelectMany(p => p).ToList();
+			// Result: ["Apple", "Banana", "Grapes", "Coke", "Milk", "Fanta", "Mobile", "TV", "Tablet"]
+			
+
+			// Given a list of employees, each with a list of skills:
+			var employees = new List<Employee2>
+			{
+					new ("John Doe", ["C#", "ASP.NET Core", "Rest API"] ),
+					new ("Jane Doe", [ "Python", "Django", "Fast API"] ),
+					new ("Alice Miller", [ "JavaScript", "Node.js", "Express" ])
+			};
+
+			var allSkills = employees.SelectMany(e => e.Skills);
+			foreach (var skill in allSkills)
+			{
+				Console.WriteLine(skill);
+			}
+			// Output: C#, ASP.NET Core, Rest API, Python, Django, Fast API, JavaScript, Node.js, Express
+
+
+			// The same result can be achieved using query syntax, where from clauses after the first one translate to SelectMany:
+			var allSkills2 = from emp in employees
+											 from skill in emp.Skills
+											 select skill;
+			
+			foreach(var skill in allSkills2)
+			{
+				Console.WriteLine(skill);
+			}
+
+
+			// Advanced: With Index and Result Selection
+			// You can also use SelectMany with an index and a result selector to include source elements in the output:
+
+      PetOwner[] petOwners =
+        [ 
+					new ("Higa", [ "Scruffy", "Sam" ] ),
+          new ("Ashkenazi", [ "Walker", "Sugar" ] ),
+          new ("Price", ["Scratches", "Diesel"]),
+          new ("Hines", ["Dusty"])
+				];			
+
+			// Project the pet owner's name and the pet's name.
+			var petowns =
+					petOwners
+					.SelectMany(petOwner => petOwner.Pets, (petOwner, petName) => new { petOwner, petName })
+					.Where(ownerAndPet => ownerAndPet.petName.StartsWith('S'))
+					.Select(ownerAndPet =>
+									new
+									{
+											Owner = ownerAndPet.petOwner.Name,
+											Pet = ownerAndPet.petName
+									}
+					);
+
+			// Print the results.
+			foreach (var obj in petowns)
+			{
+					Console.WriteLine(obj);
+			}
+
+
 			// Interview Questions
 			var datos = "HOME GO HOME WRONG".Split(' '); 
 			// => [0] ="Home"

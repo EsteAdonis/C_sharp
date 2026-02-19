@@ -1,5 +1,14 @@
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Text.Json;
+
+
+// learn.microsoft.com/en-us/dotnet/fundamentals/networking/http/httpclient
+// Next topic:
+//		Explore the HTTP HEAD request
+//		Explore the HTTP OPTIONS request
+//    and so on...
+
 
 namespace C_Sharp.HttpExamples;
 
@@ -7,13 +16,78 @@ public static class HttpMainExamples
 {
 	public static async Task HttpExamples()
 	{
-		// await GetAllTodos();
-		// await GetAllTodosByJson();
-		await GetAllTodoById();
-		// await GetHttp();
-		// await GetHttpWhenAll();
+  	string Uri = "https://jsonplaceholder.typicode.com/";
+		using var client = new HttpClient(){ BaseAddress = new Uri(Uri) } ; 
+		// await GetAllTodos(client);
+		// await GetAllTodosByJson(client);
+		// await GetAllTodoById(client);
+		// await PostTodo(client);
+		// await PostTodoJson(client);
+		// await HttpDelete(client, "1");
+		// await HttpPut(client, 1);
+		// await PutAsJsonAsync(client, 5);
+		await HttpPatch(client, 5);
+		// await GetHttp(client);
+		// await GetHttpWhenAll(client);
 
 	}
+
+
+	public static async Task HttpPatch(HttpClient client, int id)
+	{
+		using StringContent jsonContent = new (
+				JsonSerializer.Serialize(new
+				{
+					completed = true
+				}),
+				Encoding.UTF8,
+				"application/json"
+		);
+
+		using var response = await client.PatchAsync($"todos/{id}", jsonContent);
+		response.EnsureSuccessStatusCode();
+
+		var jsonResponse = await response.Content.ReadAsStringAsync();
+		Console.WriteLine($"{jsonResponse}\n");
+	}
+
+	public static async Task HttpPut(HttpClient client, int id)
+	{
+		using StringContent jsonContent = new (
+				JsonSerializer.Serialize(new
+				{
+					userId = 1,
+					id = 1,
+					title = "foo bar",
+					completed = false				
+				}),
+				Encoding.UTF8,
+				"application/json"
+		);
+
+		using var response = await client.PutAsync($"todos/{id}", jsonContent);
+		response.EnsureSuccessStatusCode();
+
+		var jsonResponse = await response.Content.ReadAsStringAsync();
+		Console.WriteLine($"{jsonResponse}\n");
+	}
+
+	static async Task PutAsJsonAsync(HttpClient client, int id)
+	{
+			using var response = await client.PutAsJsonAsync(
+					$"todos/{id}",
+					new Todo(Title: "partially update todo", Completed: true));
+
+			response.EnsureSuccessStatusCode();
+
+			var todo = await response.Content.ReadFromJsonAsync<Todo>();
+			Console.WriteLine($"{todo}\n");
+
+			// Expected output:
+			//   PUT https://jsonplaceholder.typicode.com/todos/5 HTTP/1.1
+			//   Todo { UserId = , Id = 5, Title = partially update todo, Completed = True }
+	}
+
 
 	public static async Task GetAllTodos()
 	{
@@ -26,30 +100,57 @@ public static class HttpMainExamples
 		}
 	}
 
-	public record Todo(int UserId, int Id, string Title, bool Completed);
+	public record Todo(int? UserId=null, int? Id=null, string Title=null, bool? Completed=null);
 
-	public static async Task GetAllTodosByJson()
+	public static async Task GetAllTodosByJson(HttpClient client)
 	{
-		using var client = new HttpClient();
-		var response = await client.GetFromJsonAsync<List<Todo>>("https://jsonplaceholder.typicode.com/todos");
+		var response = await client.GetFromJsonAsync<List<Todo>>("todos");
 		response.ForEach(Console.WriteLine);
 	}
 
-	public static async Task GetAllTodoById()
+	public static async Task GetAllTodoById(HttpClient client)
 	{
-		using var client =  new HttpClient();
-		var response = await client.GetFromJsonAsync<Todo>("https://jsonplaceholder.typicode.com/todos/99");
+		var response = await client.GetFromJsonAsync<Todo>("todos/99");
 		Console.WriteLine(response);
 	}
 
-	public static async Task GetAllTodoByIdBearerToken()
+	public static async Task GetAllTodoByIdBearerToken(HttpClient client)
 	{
-		using var client =  new HttpClient();
 		client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Beare", "<my-token>");
-		var response = await client.GetFromJsonAsync<Todo>("https://jsonplaceholder.typicode.com/todos/99");
+		var response = await client.GetFromJsonAsync<Todo>("todos/99");
 		Console.WriteLine(response);
 	}
 
+	public static async Task PostTodo(HttpClient client)
+	{
+		using StringContent jsonContent = new (JsonSerializer.Serialize(new {userId=301, id=1, title="Adonis Sample", Complete=false}), Encoding.UTF8, "application/json");
+    using var response = await client.PostAsync("todos", jsonContent);
+		var result = response.EnsureSuccessStatusCode();
+
+		var jsonResponse = await response.Content.ReadAsStringAsync();
+		Console.WriteLine($"{jsonResponse}\n");
+	}
+
+	public static async Task PostTodoJson(HttpClient client)
+	{
+		var todoData = new Todo(UserId: 9, Id: 99, Title: "Show extensions", Completed: false);
+
+		using var response = await client.PostAsJsonAsync("todos", todoData);
+
+		response.EnsureSuccessStatusCode();
+		var todo = await response.Content.ReadFromJsonAsync<Todo>();
+		Console.WriteLine($"{todo}\n");
+	}
+
+
+	public static async Task HttpDelete(HttpClient client, string id)
+	{
+		using var response = await client.DeleteAsync($"todos/{id}");
+		response.EnsureSuccessStatusCode();
+
+		var jsonResponse = await response.Content.ReadAsStringAsync();
+		Console.WriteLine($"{jsonResponse}\n");
+	}
 
 	public static async Task GetHttp()
 	{

@@ -91,7 +91,9 @@ namespace C_Sharp
 			// Stopwatch_Example.Running_Stopwatch();      
 
 			// MultiThreading.MultiThreadingExamples();
-			// Linq.LinqExamples();
+
+
+			C_Sharp.Linq.Linq.LinqExamples();
 			// await WorkingWithRepos.RunningRepo();
 
 
@@ -99,7 +101,7 @@ namespace C_Sharp
 			// EntrySingleton.ExecSingleton();
 
 			// HttpClient
-			await HttpMainExamples.HttpExamples();
+			// await HttpMainExamples.HttpExamples();
 		}
 	}
 }
